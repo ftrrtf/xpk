@@ -1,2 +1,2 @@
-xpk
+Khpk (Khmelnitsky Polytechnic College)
 ===
