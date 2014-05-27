@@ -40,6 +40,10 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
+            coffee: {
+                files: 'app/coffee/*.coffee',
+                tasks: ['coffee:compile']
+            },
             jstest: {
                 files: ['test/spec/{,*/}*.js'],
                 tasks: ['test:watch']
@@ -61,6 +65,20 @@ module.exports = function (grunt) {
                     '<%= config.app %>/images/{,*/}*'
                 ]
             }
+        },
+
+        coffee: {
+          compile: {
+            options: {
+                bare: true
+            },
+            expand: true,
+            flatten: true,
+            cwd: "" + __dirname + "/app/coffee/",
+            src: ['*.coffee'],
+            dest: 'app/scripts/',
+            ext: '.js',
+          }
         },
 
         // The actual grunt server settings
