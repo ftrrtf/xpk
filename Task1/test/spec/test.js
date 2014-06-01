@@ -51,6 +51,23 @@
             });
         });
 
+        describe('Console emulator tests', function() {
+            var consoleEmulator;
+
+            beforeEach(function(done){
+                consoleEmulator = new ConsoleEmulator();
+                done();
+            });
+
+            after(function(done){
+                console.log('hello!');
+                done();
+            });
+
+            it('Test current path', function() {
+                assert.equal(consoleEmulator.getCurrentPath(), '/');
+            })
+        });
     });
 
 })();
