@@ -1,8 +1,12 @@
 'use strict'
+
 getCommandsFromText = (string) ->
   string.match(/[^\r\n]+/g)
+
 run =  -> 
   commands = getCommandsFromText($('#inputData').val())
-  console.log commands
+  consoleEmulator = new ConsoleEmulator
+  result = consoleEmulator.load(commands)
+  $('#outputData').val(result.join('\n'));
   return   
-two = 2
+

@@ -56,17 +56,97 @@
 
             beforeEach(function(done){
                 consoleEmulator = new ConsoleEmulator();
+                consoleEmulator.clear();
                 done();
             });
 
-            after(function(done){
-                console.log('hello!');
+            afterEach(function(done){
+                consoleEmulator = null;
                 done();
             });
 
-            it('Test current path', function() {
+            it('Test current path #1', function() {
                 assert.equal(consoleEmulator.getCurrentPath(), '/');
             })
+
+            it('Test current path #2', function() {
+                var input = [
+                    'pwd'
+                ];
+                var expected = [
+                    '/'
+                ];
+                assert.deepEqual(consoleEmulator.load(input), expected);
+            });
+
+            it('Optimize path test #1' , function() {
+                assert.equal(consoleEmulator.optimizePath('/a/../b/../c/'), '/c/');
+            });
+
+            it('Optimize path test #2' , function() {
+                assert.equal(consoleEmulator.optimizePath('/a/../../b/../c/'), '/c/');
+            });
+
+            it('Optimize path test #3' , function() {
+                assert.equal(consoleEmulator.optimizePath('/../../../../'), '/');
+            });
+
+            it('Real test #1', function() {
+                var input = [
+                    'pwd',
+                    'pwd'
+                ];
+                var expected = [
+                    '/',
+                    '/'
+                ];
+                assert.deepEqual(consoleEmulator.load(input), expected);
+            });
+
+            it('Real test #2', function() {
+                var input = [
+                    'cd vasa',
+                    'pwd'
+                ];
+                var expected = [
+                    '/vasa/'
+                ];
+                assert.deepEqual(consoleEmulator.load(input), expected);
+            });
+
+            it('Real test #3', function() {
+                var input = [
+                    'pwd',
+                    'cd /home/vasya',
+                    'pwd',
+                    'cd ..',
+                    'pwd',
+                    'cd vasya/../petya',
+                    'pwd'
+                ];
+                var expected = [
+                    '/',
+                    '/home/vasya/',
+                    '/home/',
+                    '/home/petya/'
+                ];
+                assert.deepEqual(consoleEmulator.load(input), expected);
+            });
+
+
+            it('Real test #4', function() {
+                var input = [
+                    'cd /a/b',
+                    'pwd',
+                    'cd ../a/b',
+                    'pwd'
+                ];
+                var expected = [
+                    '/a/b/',
+                    '/a/a/b/'
+                ];
+                assert.deepEqual(consoleEmulator.load(input), expected);
+            });
         });
     });
 
