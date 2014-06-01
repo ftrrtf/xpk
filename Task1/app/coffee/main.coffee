@@ -1,4 +1,8 @@
 'use strict'
+getCommandsFromText = (string) ->
+  string.match(/[^\r\n]+/g)
 run =  -> 
-  commands = $('#inputData').val().split('\n')
-  console.log commands   
+  commands = getCommandsFromText($('#inputData').val())
+  console.log commands
+  return   
+two = 2

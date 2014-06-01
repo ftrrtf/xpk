@@ -1,8 +1,14 @@
 'use strict';
-var run;
+var getCommandsFromText, run, two;
+
+getCommandsFromText = function(string) {
+  return string.match(/[^\r\n]+/g);
+};
 
 run = function() {
   var commands;
-  commands = $('#inputData').val().split('\n');
-  return console.log(commands);
+  commands = getCommandsFromText($('#inputData').val());
+  console.log(commands);
 };
+
+two = 2;

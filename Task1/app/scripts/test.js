@@ -1,1 +1,3 @@
-alert('Hello!s');
+var two;
+
+two = 2;

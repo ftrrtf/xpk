@@ -45,7 +45,7 @@ module.exports = function (grunt) {
                 tasks: ['coffee:compile']
             },
             jstest: {
-                files: ['test/spec/{,*/}*.js'],
+                files: ['test/spec/{,*/}*.js', 'test/index.html'],
                 tasks: ['test:watch']
             },
             gruntfile: {
@@ -109,6 +109,7 @@ module.exports = function (grunt) {
                         return [
                             connect.static('.tmp'),
                             connect.static('test'),
+                            connect().use('/scripts', connect.static('./app/scripts')),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect.static(config.app)
                         ];
@@ -156,7 +157,12 @@ module.exports = function (grunt) {
         mocha: {
             all: {
                 options: {
+                    scripts: [
+                        'app/scripts/*.js',
+                        'test/spec/*.js',
+                    ],
                     run: true,
+                    reporter: 'Spec',
                     urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
                 }
             }

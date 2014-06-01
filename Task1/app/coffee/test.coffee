@@ -1,1 +1,1 @@
-alert 'Hello!s'
+two = 2
