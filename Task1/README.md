@@ -3,11 +3,15 @@ Volodymyr Gamula
 
 This is a project, which realizes [this task].
 
+[demo]
+
 Project was written with using next instruments:
   - [Grunt]
   - [Coffescript]
   - [Mocha] test runner
   - [Chai] test instruments
+
+
 
 Version
 ----
@@ -27,3 +31,4 @@ License
 [Chai]: http://chaijs.com/
 [node.js]: http://nodejs.org
 [MIT]: http://opensource.org/licenses/MIT
+[demo]: https://vgamula.github.io/console/
