@@ -44,6 +44,10 @@ module.exports = function (grunt) {
                 files: 'app/coffee/*.coffee',
                 tasks: ['coffee:compile']
             },
+            coffeeTests: {
+                files: ['test/coffee/*.coffee'],
+                tasks: ['coffee:compileTests']
+            },
             jstest: {
                 files: ['test/spec/{,*/}*.js', 'test/index.html'],
                 tasks: ['test:watch']
@@ -78,7 +82,18 @@ module.exports = function (grunt) {
             src: ['*.coffee'],
             dest: 'app/scripts/',
             ext: '.js',
-          }
+          },
+          compileTests: {
+            options: {
+                bare: true
+            },
+            expand: true,
+            flatten: true,
+            cwd: "" + __dirname + "/test/coffee/",
+            src: ['*.coffee'],
+            dest: 'test/spec/',
+            ext: '.js',
+          },
         },
 
         // The actual grunt server settings
