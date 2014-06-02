@@ -48,6 +48,10 @@ module.exports = function (grunt) {
                 files: ['test/coffee/*.coffee'],
                 tasks: ['coffee:compileTests']
             },
+            features: {
+                files: ['features/*.feature', 'features/step_definitions/*.js'],
+                tasks: ['cucumberjs']
+            },
             jstest: {
                 files: ['test/spec/{,*/}*.js', 'test/index.html'],
                 tasks: ['test:watch']
@@ -70,7 +74,12 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
+        cucumberjs: {
+          src: 'features/features',
+            options: {
+              steps: "features/step_definitions"
+          }
+        },
         coffee: {
           compile: {
             options: {

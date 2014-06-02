@@ -8,5 +8,4 @@ run =  ->
   consoleEmulator = new ConsoleEmulator
   result = consoleEmulator.load(commands)
   $('#outputData').val(result.join('\n'));
-  return   
-
+  return 
