@@ -9,8 +9,12 @@ class ConsoleEmulator
     currentPath = privateOptimizePath(path) + '/'
     return
 
-  clear: ->
+  privateClear = ->
     currentPath = '/'
+
+  clear: ->
+    privateClear()
+    return
 
   privateOptimizePath = (path) ->
     items = path.split '/'
@@ -26,7 +30,6 @@ class ConsoleEmulator
   optimizePath: (path) ->
     privateOptimizePath(path)
     
-
   load: (items) ->
     output = []
     for item in items
@@ -37,5 +40,6 @@ class ConsoleEmulator
       if path[0] isnt '/'
         path = currentPath + path 
       changeDirectory(path)
+    privateClear()
     output
 

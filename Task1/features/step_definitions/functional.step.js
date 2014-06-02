@@ -12,7 +12,7 @@ var myStepDefinitionsWrapper = function () {
   this.World = require("../support/world.js").World;
 
   this.Given(/^I am on the start page$/, function(callback) {
-    this.visit('http://vgamula.github.io/console/', callback);
+    this.visit('http://localhost:9000/', callback);
   });
 
   this.Then(/^I pass "(.*)" into input$/, function(arg1, callback) {

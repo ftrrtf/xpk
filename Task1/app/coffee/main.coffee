@@ -1,7 +1,7 @@
 'use strict'
 
 getCommandsFromText = (string) ->
-  string.match(/[^\r\n]+/g)
+  string.match(/[^\r\n]+/g) or []
 
 run =  -> 
   commands = getCommandsFromText($('#inputData').val())

@@ -2,7 +2,7 @@
 var getCommandsFromText, run;
 
 getCommandsFromText = function(string) {
-  return string.match(/[^\r\n]+/g);
+  return string.match(/[^\r\n]+/g) || [];
 };
 
 run = function() {

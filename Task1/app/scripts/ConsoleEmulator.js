@@ -1,7 +1,7 @@
 var ConsoleEmulator;
 
 ConsoleEmulator = (function() {
-  var changeDirectory, currentPath, privateOptimizePath;
+  var changeDirectory, currentPath, privateClear, privateOptimizePath;
 
   function ConsoleEmulator() {}
 
@@ -15,8 +15,12 @@ ConsoleEmulator = (function() {
     currentPath = privateOptimizePath(path) + '/';
   };
 
-  ConsoleEmulator.prototype.clear = function() {
+  privateClear = function() {
     return currentPath = '/';
+  };
+
+  ConsoleEmulator.prototype.clear = function() {
+    privateClear();
   };
 
   privateOptimizePath = function(path) {
@@ -57,6 +61,7 @@ ConsoleEmulator = (function() {
       }
       changeDirectory(path);
     }
+    privateClear();
     return output;
   };
 
