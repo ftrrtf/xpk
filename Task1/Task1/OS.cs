@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,40 +9,88 @@ namespace Task1
 {
     class OS
     {
-        public string Path { get; set; }
+        private Stack<string> _dirs;
 
         public OS(string path=null)
         {
-            if (string.IsNullOrEmpty(path))
+            _dirs = new Stack<string>();
+            if (string.IsNullOrEmpty(path)) return;
+
+            foreach (string dir in path.Split('\\')) 
             {
-                Path = "/";
-                return;
+                if (dir == "..")
+                {
+                    _dirs.Pop();
+                }
+                else
+                {
+                    _dirs.Push(dir);
+                }
             }
-            Path = path;
+        }    
+
+        public string Path()
+        {
+            string result = "\\";
+            foreach(string dir in _dirs)
+            {
+                if (result != "\\")
+                {
+                    result = "\\" + result;
+                }
+                result = dir + result;
+            }
+            return result;
         }
 
         public string Listen(string cmd)
         {
-            string[] args = cmd.Split(' ');
-            string errorMsg = "Incorrect input.";
-
-            if (args.Count() <= 0) 
+            string[] _args = cmd.Split(' ');
+            string _errorMsg = "Incorrect input.";
+     
+            if (_args.Count() <= 0) 
             {
-                return errorMsg;
+                return _errorMsg;
             }
-            switch (args[0])
+            switch (_args[0])
             {
                 case "cd":
                     {
-                        return Path;
+                        if (_args.Count() <= 1) return _errorMsg;
+
+                        string _path = _args[1];
+                        if (_path[0] == '\\')
+                        {
+                            _dirs.Clear();
+                        }
+
+                        foreach (string dir in _path.Split('\\'))
+                        {
+                            switch (dir)
+                            {
+                                case "..":
+                                    {
+                                        _dirs.Pop();
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        _dirs.Push(dir);
+                                        break;
+                                    }
+                            }
+
+                        }
+
+                        return Path();
                     }
                 case "pwd":
                     {
-                        return Path;
+                        return Path();
                     }
                 default:
                     {
-                        return errorMsg;
+                        return _errorMsg;
                     }
             }
         }

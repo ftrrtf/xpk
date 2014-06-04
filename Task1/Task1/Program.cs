@@ -10,7 +10,11 @@ namespace Task1
     {
         static void Main()
         {
-            
+            OS vasya = new OS();
+            Console.WriteLine(vasya.Listen("pwd"));
+            vasya.Listen("cd \\home\\myfolder\\vasya\\..\\petya");
+            Console.WriteLine(vasya.Listen("pwd"));
+            Console.ReadLine();
         }
     }
 }
