@@ -25,22 +25,29 @@ namespace Task1
                 }
                 else
                 {
-                    _dirs.Push(dir);
+                    if (dir!="")
+                        _dirs.Push(dir);
                 }
             }
         }    
 
         public string Path()
         {
-            string result = "\\";
+            if (_dirs.Count <= 0)
+            {
+                return "\\";
+            }
+            string result = "";
             foreach(string dir in _dirs)
             {
-                if (result != "\\")
+                if (result == "")
                 {
-                    result = "\\" + result;
+                    result = dir;
+                    continue;
                 }
-                result = dir + result;
+                result = dir + "\\" + result;
             }
+            result = "\\" + result;
             return result;
         }
 
@@ -60,15 +67,26 @@ namespace Task1
                         if (_args.Count() <= 1) return _errorMsg;
 
                         string _path = _args[1];
+                        if (string.IsNullOrEmpty(_path))
+                        {
+                            return _errorMsg;
+                        }
+
                         if (_path[0] == '\\')
                         {
                             _dirs.Clear();
+
                         }
 
                         foreach (string dir in _path.Split('\\'))
                         {
                             switch (dir)
                             {
+                                case "":
+                                    {
+                                        _dirs.Clear();
+                                        break;
+                                    }
                                 case "..":
                                     {
                                         if (_dirs.Count>0)
@@ -109,10 +127,14 @@ namespace Task1
                 OS item = new OS();
                 item._dirs = new Stack<string>();
                 item._dirs.Push("home");
-                item._dirs.Push("programs");
-                item._dirs.Push("..");
                 item._dirs.Push("movies");
-                Assert.AreEqual("\\home\\movies", item.Path());
+                item._dirs.Push("horrors");
+                Assert.AreEqual("\\home\\movies\\horrors", item.Path());
+                for (int i = 0; i < 3; i++)
+                {
+                    item._dirs.Pop();
+                }
+                Assert.AreEqual("\\", item.Path());
             }
 
             [Test]
@@ -123,7 +145,8 @@ namespace Task1
                 item = new OS("\\");
                 Assert.IsEmpty(item._dirs);
                 item = new OS("\\home\\programs\\..\\movies");
-                Assert.AreEqual(item.Path(), "home\\movies");
+                item = new OS("home\\movies");
+                Assert.AreEqual("\\home\\movies", item.Path());
             }
 
             [Test]
@@ -133,10 +156,11 @@ namespace Task1
                 string errorMsg = "Incorrect input.";
                 Assert.AreEqual(errorMsg, item.Listen(""));
                 Assert.AreEqual(errorMsg, item.Listen("cd "));
-                Assert.AreEqual("\\", item.Listen("\\"));
-                Assert.AreEqual("\\", item.Listen("home\\.."));
-                item.Listen("\\home\\movies\\horrors");
-                Assert.AreEqual(item.Listen("pwd"), "home\\movies\\horrors");
+                Assert.AreEqual(errorMsg, item.Listen("\\"));
+                Assert.AreEqual("\\", item.Listen("cd \\"));
+                Assert.AreEqual("\\", item.Listen("cd home\\.."));
+                item.Listen("cd \\home\\movies\\horrors");
+                Assert.AreEqual("\\home\\movies\\horrors", item.Listen("pwd"));
             }
         }
         #endregion
