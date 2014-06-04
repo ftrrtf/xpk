@@ -4,3 +4,6 @@ E:\Git\Local\xpk\Task1\Task1\bin\Debug\Task1.exe
 E:\Git\Local\xpk\Task1\Task1\bin\Debug\Task1.pdb
 E:\Git\Local\xpk\Task1\Task1\obj\Debug\Task1.exe
 E:\Git\Local\xpk\Task1\Task1\obj\Debug\Task1.pdb
+E:\Git\Local\xpk\Task1\Task1\bin\Debug\nunit.framework.dll
+E:\Git\Local\xpk\Task1\Task1\bin\Debug\nunit.mocks.dll
+E:\Git\Local\xpk\Task1\Task1\bin\Debug\nunit.framework.xml

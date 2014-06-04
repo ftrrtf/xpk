@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Task1
 {
@@ -70,7 +71,8 @@ namespace Task1
                             {
                                 case "..":
                                     {
-                                        _dirs.Pop();
+                                        if (_dirs.Count>0)
+                                            _dirs.Pop();
                                         break;
                                     }
                                 default:
@@ -94,5 +96,50 @@ namespace Task1
                     }
             }
         }
+
+
+        #region NUnit tests for all methods.
+
+        [TestFixture]
+        public class TestClass 
+        {
+            [Test]
+            public void Path_Test()
+            {
+                OS item = new OS();
+                item._dirs = new Stack<string>();
+                item._dirs.Push("home");
+                item._dirs.Push("programs");
+                item._dirs.Push("..");
+                item._dirs.Push("movies");
+                Assert.AreEqual("\\home\\movies", item.Path());
+            }
+
+            [Test]
+            public void Constructor_Test()
+            {
+                OS item = new OS();
+                Assert.IsEmpty(item._dirs);
+                item = new OS("\\");
+                Assert.IsEmpty(item._dirs);
+                item = new OS("\\home\\programs\\..\\movies");
+                Assert.AreEqual(item.Path(), "home\\movies");
+            }
+
+            [Test]
+            public void Listen_Test()
+            {
+                OS item = new OS();
+                string errorMsg = "Incorrect input.";
+                Assert.AreEqual(errorMsg, item.Listen(""));
+                Assert.AreEqual(errorMsg, item.Listen("cd "));
+                Assert.AreEqual("\\", item.Listen("\\"));
+                Assert.AreEqual("\\", item.Listen("home\\.."));
+                item.Listen("\\home\\movies\\horrors");
+                Assert.AreEqual(item.Listen("pwd"), "home\\movies\\horrors");
+            }
+        }
+        #endregion
+
     }
 }
